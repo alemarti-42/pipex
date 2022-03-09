@@ -36,29 +36,45 @@ int main(int argc, char *argv[], char *envp[])
 	//atexit(check_leaks);
     //open infile and outfile
 	pipe(fd_pipe);
-	if (argc < 4)
+	if (argc != 5)
+    {
+        ft_putstr_fd("Wrong argument number\n", 2);
 		return(0);
+    }
 	environ = init_environ(argv[1], argv[argc - 1], envp);
 	// Comprobar con access que se puede acceder a lso ficheros
 	// La apertura de los ficheros se hara en los hijos
 	pid = fork();
+	printf("pid1:%d\n", pid);
+
 	if (pid == -1)
 	{
 		ft_putstr_fd("Error creando procesos\n", 2);
 	}
 	else if (pid == 0)
+    {
+        ft_putstr_fd("READER\n", 2);
 		reader_child(fd_pipe, argv[2], environ);
+    }
 	else
 	{
-		pid = fork();
-		if (pid == -1)
-		{
-			ft_putstr_fd("Error creando procesos\n", 2);
-		}
-		else if (pid == 0)
-			writer_child(fd_pipe, argv[3], environ);
+        writer_child(fd_pipe, argv[3], environ);
+        //waitpid(pid, NULL, 0);
+		// pid = fork();
+		// printf("pid2:%d\n", pid);
+		// if (pid == -1)
+		// {
+		// 	ft_putstr_fd("Error creando procesos\n", 2);
+		// }
+		// else if (pid == 0)
+        // {
+        //     ft_putstr_fd("WRITER\n", 2);
+		// 	writer_child(fd_pipe, argv[3], environ);
+        // }
 	}
-	//waitpid(pid, NULL, 0);
+	waitpid(pid, NULL, 0);
+
+	
 
     return (0);
 

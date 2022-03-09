@@ -5,7 +5,7 @@ int exec_cmd(char **cmd_args, char **paths, char *envp[])
     char	*bin;
 
     bin = which_bin(paths, cmd_args[0]);
-	 if (!bin)
+	if (!bin)
 	 	return (-1);
     return (execve(bin, cmd_args, envp));
 
