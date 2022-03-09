@@ -2,7 +2,8 @@ SRCS		=	pipex.c				\
 				file_utils.c		\
 				libft_utils.c		\
 				ft_split.c			\
-				exec_utils.c
+				exec_utils.c		\
+				children_utils.c
 
 
 OBJS		= ${SRCS:.c=.o}
