@@ -6,7 +6,7 @@
 #    By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/22 15:25:41 by alemarti          #+#    #+#              #
-#    Updated: 2022/03/22 15:25:42 by alemarti         ###   ########.fr        #
+#    Updated: 2022/03/22 16:47:20 by alemarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ NAME		= pipex
 
 CC			= gcc
 RM			= rm -f
-//CFLAGS		= -Wall -Werror -Wextra
+CFLAGS		= -Wall -Werror -Wextra
 
 
 all:		${NAME}

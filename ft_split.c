@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:35 by alemarti          #+#    #+#             */
-/*   Updated: 2022/03/22 15:48:48 by alemarti         ###   ########.fr       */
+/*   Updated: 2022/03/22 16:57:09 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,19 @@ static char	*stralloc(const char *s, char c)
 	}
 	res = ft_substr(s, 0, count);
 	return (res);
+}
+
+void	free_split(char **str)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free (str);
 }

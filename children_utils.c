@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:18 by alemarti          #+#    #+#             */
-/*   Updated: 2022/03/22 15:46:07 by alemarti         ###   ########.fr       */
+/*   Updated: 2022/03/22 18:54:10 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ t_environ	*init_environ(char *infile, char *outfile, char *envp[])
 	return (res);
 }
 
+void	free_environ(t_environ *environ)
+{
+	free_split(environ->paths);
+	free(environ);
+}
+
 void	reader_child(int *fd_pipe, char *cmd, t_environ *environ)
 {
 	char	**cmd_args;
@@ -34,6 +40,7 @@ void	reader_child(int *fd_pipe, char *cmd, t_environ *environ)
 	{
 		ft_putstr_fd(environ->infile, 2);
 		ft_putstr_fd(": no such file or directory\n", 2);
+		//free_environ(environ);
 		return ;
 	}
 	dup2(fd_in, STDIN_FILENO);
@@ -47,6 +54,7 @@ void	reader_child(int *fd_pipe, char *cmd, t_environ *environ)
 	}
 	close(fd_in);
 	close(fd_pipe[1]);
+	free_split(cmd_args);
 }
 
 void	writer_child(int *fd_pipe, char *cmd, t_environ *environ)
@@ -59,6 +67,7 @@ void	writer_child(int *fd_pipe, char *cmd, t_environ *environ)
 	{
 		ft_putstr_fd(environ->outfile, 2);
 		ft_putstr_fd(": no such file or directory\n", 2);
+		//free_environ(environ);
 		return ;
 	}
 	dup2(fd_out, STDOUT_FILENO);
@@ -72,4 +81,5 @@ void	writer_child(int *fd_pipe, char *cmd, t_environ *environ)
 	}
 	close(fd_out);
 	close(fd_pipe[0]);
+	free_split(cmd_args);
 }

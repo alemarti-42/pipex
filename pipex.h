@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:46 by alemarti          #+#    #+#             */
-/*   Updated: 2022/03/22 15:44:52 by alemarti         ###   ########.fr       */
+/*   Updated: 2022/03/22 17:27:15 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ char		*ft_substr(const char *s, unsigned int start, size_t len);
 
 //ft_split.c
 char		**ft_split(const char *s, char c);
+void		free_split(char **str);
 
 //Exec_utils.c
 int			exec_cmd(char **cmd_args, char **paths, char *envp[]);
@@ -52,6 +53,7 @@ char		*which_bin(char **paths, char *cmd);
 
 //children_utils.c
 t_environ	*init_environ(char *infile, char *outfile, char *envp[]);
+void		free_environ(t_environ *environ);
 void		reader_child(int *fd_pipe, char *cmd, t_environ *environ);
 void		writer_child(int *fd_pipe, char *cmd, t_environ *environ);
 char		**get_path(char *envp[]);

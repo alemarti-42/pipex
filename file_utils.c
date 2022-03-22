@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:32 by alemarti          #+#    #+#             */
-/*   Updated: 2022/03/22 15:48:28 by alemarti         ###   ########.fr       */
+/*   Updated: 2022/03/22 16:53:31 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	open_infile(char *infile)
 	return (open(infile, O_RDONLY));
 }
 
-void	redirection(char *cmd, char **env, int fdin)
-{
-	int	pid;
-	int	pipefd[2];
-}
+// void	redirection(char *cmd, char **env, int fdin)
+// {
+// 	int	pid;
+// 	int	pipefd[2];
+// }
