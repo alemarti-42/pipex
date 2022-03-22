@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libft_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/22 15:25:38 by alemarti          #+#    #+#             */
+/*   Updated: 2022/03/22 15:49:20 by alemarti         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include"pipex.h"
 
 size_t	ft_strlen(const char *s)
@@ -21,11 +33,10 @@ void	ft_putstr_fd(char *s, int fd)
 		write(fd, &s[i], 1);
 }
 
-
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	int	i;
-    int res;
+	int	res;
 
 	i = 0;
 	if (!n)
@@ -38,10 +49,9 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 			return (0);
 		i++;
 	}
-    res = (unsigned char)s1[i] - (unsigned char)s2[i];
+	res = (unsigned char)s1[i] - (unsigned char)s2[i];
 	return (res);
 }
-
 
 char	*ft_substr(const char *s, unsigned int start, size_t len)
 {

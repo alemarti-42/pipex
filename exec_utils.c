@@ -1,51 +1,62 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/22 15:25:25 by alemarti          #+#    #+#             */
+/*   Updated: 2022/03/22 15:47:55 by alemarti         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include"pipex.h"
 
-int exec_cmd(char **cmd_args, char **paths, char *envp[])
+int	exec_cmd(char **cmd_args, char **paths, char *envp[])
 {
-    char	*bin;
+	char	*bin;
 
-    bin = which_bin(paths, cmd_args[0]);
+	bin = which_bin(paths, cmd_args[0]);
 	if (!bin)
-	 	return (-1);
-    return (execve(bin, cmd_args, envp));
-
+		return (-1);
+	return (execve(bin, cmd_args, envp));
 }
 
-char    *path_join(char *path, char *cmd)
+char	*path_join(char *path, char *cmd)
 {
-    char    *res;
-    int     i;
-    int     j;
+	char	*res;
+	int		i;
+	int		j;
 
-    i = -1;
-    res = (char *)malloc(ft_strlen(path) + ft_strlen(cmd) + 2);
-    while (path[++i])
-        res[i] = path[i];
-    res[i] = '/';
-    j = i + 1;
-    i = -1;
-    while (cmd[++i])
-    {
-        res[j] = cmd[i];
-        j++;
-    }
-    res[j] = 0;
-    return (res);
+	i = -1;
+	res = (char *)malloc(ft_strlen(path) + ft_strlen(cmd) + 2);
+	while (path[++i])
+		res[i] = path[i];
+	res[i] = '/';
+	j = i + 1;
+	i = -1;
+	while (cmd[++i])
+	{
+		res[j] = cmd[i];
+		j++;
+	}
+	res[j] = 0;
+	return (res);
 }
 
-char    *which_bin(char **paths, char *cmd)
+char	*which_bin(char **paths, char *cmd)
 {
-    char    *bin;
-    int     i;
+	char	*bin;
+	int		i;
 
-    i = 0;
-    while (paths[i])
-    {
-        bin = path_join(paths[i], cmd);
-        if (access(bin, F_OK) == 0)
-            return (bin);
-        free(bin);
-        i++;
-    }
+	i = 0;
+	while (paths[i])
+	{
+		bin = path_join(paths[i], cmd);
+		if (access(bin, F_OK) == 0)
+			return (bin);
+		free(bin);
+		i++;
+	}
 	return (NULL);
 }
