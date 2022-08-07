@@ -40,7 +40,7 @@ fclean:		clean
 			@${RM} ${NAME}
 
 test:		${OBJS}
-			${CC} ${OBJS} -o ${NAME}
+			${CC} -std=c11 ${OBJS} -o ${NAME}
 
 re:			fclean all
 

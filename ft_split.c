@@ -85,10 +85,8 @@ static char	*stralloc(const char *s, char c)
 void	free_split(char **str)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	while (str[i])
 	{
 		free(str[i]);

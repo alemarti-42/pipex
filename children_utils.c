@@ -41,6 +41,7 @@ void	reader_child(int *fd_pipe, char *cmd, t_environ *environ)
 		ft_putstr_fd("pipex: no such file or directory: ", 2);
 		ft_putstr_fd(environ->infile, 2);
 		ft_putstr_fd("\n", 2);
+		free_environ(environ);
 		exit(0);
 	}
 	dup2(fd_in, STDIN_FILENO);
@@ -52,6 +53,8 @@ void	reader_child(int *fd_pipe, char *cmd, t_environ *environ)
 		// ft_putstr_fd("pipex: commaÑnd not found: ", 2);
 		// ft_putstr_fd(cmd_args[0], 2);
 		// ft_putstr_fd("\n", 2);
+		free_split(cmd_args);
+		free_environ(environ);
 		exit (-1);
 	}
 	printf("[TEST] Reader child\n");
@@ -76,6 +79,8 @@ void	writer_child(int *fd_pipe, char *cmd, t_environ *environ)
 	cmd_args = ft_split(cmd, ' ');
 	if (exec_cmd(cmd_args, environ->paths, environ->envp) == -1)
 	{
+		free_split(cmd_args);
+		free_environ(environ);
 		exit(-1);
 		// ft_putstr_fd("pipex: command not found: ", 2);
 		// ft_putstr_fd(cmd_args[0], 2);

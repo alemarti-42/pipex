@@ -26,7 +26,7 @@ char	**get_path(char *envp[])
 
 void	check_leaks()
 {
-	system("leaks pipex");
+	//system("leaks pipex");
 }
 //input format: "infile" "cmd1" "cmd2" "outfile"
 
