@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:44 by alemarti          #+#    #+#             */
-/*   Updated: 2022/08/08 17:32:11 by alemarti         ###   ########.fr       */
+/*   Updated: 2022/08/08 19:30:43 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	**get_path(char *envp[])
 
 void	put_error(char *text, char *element)
 {
+	ft_putstr_fd("pipex: ", 2);
 	ft_putstr_fd(text, 2);
 	ft_putstr_fd(element, 2);
 	ft_putstr_fd("\n", 2);
@@ -44,7 +45,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 	if (argc != 5)
 	{
-		ft_putstr_fd("pipex : wrong number of arguments\n", 2);
+		ft_putstr_fd("pipex: wrong number of arguments\n", 2);
 		return (0);
 	}
 	environ = init_environ(argv[1], argv[argc - 1], envp);

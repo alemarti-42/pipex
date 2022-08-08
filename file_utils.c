@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:32 by alemarti          #+#    #+#             */
-/*   Updated: 2022/08/08 16:57:23 by alemarti         ###   ########.fr       */
+/*   Updated: 2022/08/08 19:21:25 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	open_infile(char *infile)
 {
 	if (access(infile, F_OK) == -1)
 	{
-		put_error("pipex: no such file or directory: ", infile);
+		put_error("no such file or directory: ", infile);
 		return (-1);
 	}
 	return (open(infile, O_RDONLY));
@@ -46,9 +46,7 @@ int	open_outfile(char *outfile)
 	res = open(outfile, O_CREAT | O_RDWR | O_TRUNC, 0000644);
 	if (access(outfile, W_OK) == -1)
 	{
-		ft_putstr_fd("pipex: permission denied: ", 2);
-		ft_putstr_fd(outfile, 2);
-		ft_putstr_fd("\n", 2);
+		put_error("permission denied: ", outfile);
 		return (-1);
 	}
 	return (res);

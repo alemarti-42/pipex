@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:18 by alemarti          #+#    #+#             */
-/*   Updated: 2022/08/08 17:14:23 by alemarti         ###   ########.fr       */
+/*   Updated: 2022/08/08 19:30:03 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	spawn_children(t_environ *environ, char *argv[], \
 	}
 	if (!pid)
 		writer_child(fd_pipe, argv[3], environ, fd_in_out[1]);
+	if (!pid)
+		return (0);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -45,6 +47,8 @@ int	spawn_children(t_environ *environ, char *argv[], \
 	}
 	if (!pid)
 		reader_child(fd_pipe, argv[2], environ, fd_in_out[0]);
+	if (!pid)
+		return (0);
 	waitpid(pid, NULL, 0);
 	waitpid(pid, NULL, 0);
 	return (0);
@@ -58,6 +62,11 @@ void	reader_child(int *fd_pipe, char *cmd, t_environ *environ, int fd_in)
 	dup2(fd_pipe[1], STDOUT_FILENO);
 	close(fd_pipe[0]);
 	cmd_args = ft_split(cmd, ' ');
+	if (*cmd_args == 0)
+	{
+		put_error("command not found:", " ");
+		return ;
+	}
 	if (exec_cmd(cmd_args, environ->paths, environ->envp) == -1)
 	{
 		free_split(cmd_args);
@@ -77,6 +86,11 @@ void	writer_child(int *fd_pipe, char *cmd, t_environ *environ, int fd_out)
 	dup2(fd_pipe[0], STDIN_FILENO);
 	close(fd_pipe[1]);
 	cmd_args = ft_split(cmd, ' ');
+	if (*cmd_args == 0)
+	{
+		put_error("command not found:", " ");
+		return ;
+	}
 	if (exec_cmd(cmd_args, environ->paths, environ->envp) == -1)
 	{
 		free_split(cmd_args);
