@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:46 by alemarti          #+#    #+#             */
-/*   Updated: 2022/08/08 12:50:34 by alemarti         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:01:37 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_environ
 }	t_environ;
 
 //file_utils.c
+int			open_files(int *fd_in_out, t_environ *environ);
 int			open_infile(char *infile);
 int			open_outfile(char *outfile);
 
@@ -61,5 +62,6 @@ void		writer_child(int *fd_pipe, char *cmd, \
 	t_environ *environ, int fd_out);
 
 //pipex.c
+void		put_error(char *text, char *element);
 char		**get_path(char *envp[]);
 #endif
