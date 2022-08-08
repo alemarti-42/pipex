@@ -6,14 +6,14 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:46 by alemarti          #+#    #+#             */
-/*   Updated: 2022/07/05 15:47:59 by alemarti         ###   ########.fr       */
+/*   Updated: 2022/08/08 12:50:34 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include <stdio.h>
+//# include <stdio.h>
 # include <unistd.h>
 # include <sys/wait.h>
 # include <fcntl.h>
@@ -55,8 +55,10 @@ char		*which_bin(char **paths, char *cmd);
 //children_utils.c
 t_environ	*init_environ(char *infile, char *outfile, char *envp[]);
 void		free_environ(t_environ *environ);
-void		reader_child(int *fd_pipe, char *cmd, t_environ *environ);
-void		writer_child(int *fd_pipe, char *cmd, t_environ *environ);
+void		reader_child(int *fd_pipe, char *cmd, \
+	t_environ *environ, int fd_in);
+void		writer_child(int *fd_pipe, char *cmd, \
+	t_environ *environ, int fd_out);
 
 //pipex.c
 char		**get_path(char *envp[]);
