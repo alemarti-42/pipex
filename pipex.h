@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:46 by alemarti          #+#    #+#             */
-/*   Updated: 2022/08/08 16:01:37 by alemarti         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:16:17 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ char		*which_bin(char **paths, char *cmd);
 
 //children_utils.c
 t_environ	*init_environ(char *infile, char *outfile, char *envp[]);
-void		free_environ(t_environ *environ);
+int			spawn_children(t_environ *environ, char *argv[], \
+	int *fd_pipe, int *fd_in_out);
 void		reader_child(int *fd_pipe, char *cmd, \
 	t_environ *environ, int fd_in);
 void		writer_child(int *fd_pipe, char *cmd, \
@@ -63,5 +64,6 @@ void		writer_child(int *fd_pipe, char *cmd, \
 
 //pipex.c
 void		put_error(char *text, char *element);
+void		free_environ(t_environ *environ);
 char		**get_path(char *envp[]);
 #endif

@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:18 by alemarti          #+#    #+#             */
-/*   Updated: 2022/08/08 12:43:41 by alemarti         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:14:23 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,30 @@ t_environ	*init_environ(char *infile, char *outfile, char *envp[])
 	return (res);
 }
 
-void	free_environ(t_environ *environ)
+int	spawn_children(t_environ *environ, char *argv[], \
+	int *fd_pipe, int *fd_in_out)
 {
-	free_split(environ->paths);
-	free(environ);
+	int	pid;
+
+	pid = fork();
+	if (pid < 0)
+	{
+		ft_putstr_fd("Error fork one\n", 2);
+		return (-1);
+	}
+	if (!pid)
+		writer_child(fd_pipe, argv[3], environ, fd_in_out[1]);
+	pid = fork();
+	if (pid < 0)
+	{
+		ft_putstr_fd("Error fork two\n", 2);
+		return (-1);
+	}
+	if (!pid)
+		reader_child(fd_pipe, argv[2], environ, fd_in_out[0]);
+	waitpid(pid, NULL, 0);
+	waitpid(pid, NULL, 0);
+	return (0);
 }
 
 void	reader_child(int *fd_pipe, char *cmd, t_environ *environ, int fd_in)

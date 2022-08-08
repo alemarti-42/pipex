@@ -6,13 +6,12 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:44 by alemarti          #+#    #+#             */
-/*   Updated: 2022/08/08 16:49:23 by alemarti         ###   ########.fr       */
+/*   Updated: 2022/08/08 17:14:35 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-//envp takes environment variables as a third argument for the main.
 char	**get_path(char *envp[])
 {
 	while (*envp)
@@ -24,11 +23,6 @@ char	**get_path(char *envp[])
 	return (NULL);
 }
 
-// void	check_leaks()
-// {
-// 	//system("leaks pipex");
-// }
-
 void	put_error(char *text, char *element)
 {
 	ft_putstr_fd(text, 2);
@@ -36,30 +30,10 @@ void	put_error(char *text, char *element)
 	ft_putstr_fd("\n", 2);
 }
 
-int	spawn_children(t_environ *environ, char *argv[], \
-	int *fd_pipe, int *fd_in_out)
+void	free_environ(t_environ *environ)
 {
-	int	pid;
-
-	pid = fork();
-	if (pid < 0)
-	{
-		ft_putstr_fd("Error fork one\n", 2);
-		return (-1);
-	}
-	if (!pid)
-		writer_child(fd_pipe, argv[3], environ, fd_in_out[1]);
-	pid = fork();
-	if (pid < 0)
-	{
-		ft_putstr_fd("Error fork two\n", 2);
-		return (-1);
-	}
-	if (!pid)
-		reader_child(fd_pipe, argv[2], environ, fd_in_out[0]);
-	waitpid(pid, NULL, 0);
-	waitpid(pid, NULL, 0);
-	return (0);
+	free_split(environ->paths);
+	free(environ);
 }
 
 int	main(int argc, char *argv[], char *envp[])
