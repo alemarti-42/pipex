@@ -6,7 +6,7 @@
 #    By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/22 15:25:41 by alemarti          #+#    #+#              #
-#    Updated: 2022/03/22 16:47:20 by alemarti         ###   ########.fr        #
+#    Updated: 2022/08/08 19:38:47 by alemarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,9 +38,6 @@ clean:
 
 fclean:		clean
 			@${RM} ${NAME}
-
-test:		${OBJS}
-			${CC} -std=c11 ${OBJS} -o ${NAME}
 
 re:			fclean all
 
