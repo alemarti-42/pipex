@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:44 by alemarti          #+#    #+#             */
-/*   Updated: 2022/08/08 19:30:43 by alemarti         ###   ########.fr       */
+/*   Updated: 2023/06/20 07:16:40 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	put_error(char *text, char *element)
 
 void	free_environ(t_environ *environ)
 {
-	free_split(environ->paths);
+	if (environ->paths)
+		free_split(environ->paths);
 	free(environ);
 }
 
