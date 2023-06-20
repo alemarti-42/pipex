@@ -6,22 +6,22 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:32 by alemarti          #+#    #+#             */
-/*   Updated: 2022/08/08 19:21:25 by alemarti         ###   ########.fr       */
+/*   Updated: 2023/06/20 12:39:30 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"pipex.h"
 
-int	open_files(int *fd_in_out, t_environ *environ)
+int	open_files(t_environ *environ)
 {
-	fd_in_out[0] = open_infile(environ->infile);
-	fd_in_out[1] = open_outfile(environ->outfile);
-	if (fd_in_out[0] < 0)
+	environ->fd_in_out[0] = open_infile(environ->infile);
+	environ->fd_in_out[1] = open_outfile(environ->outfile);
+	if (environ->fd_in_out[0] < 0)
 	{
 		free_environ(environ);
 		return (-1);
 	}
-	if (fd_in_out[1] < 0)
+	if (environ->fd_in_out[1] < 0)
 	{
 		free_environ(environ);
 		return (-1);

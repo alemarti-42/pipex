@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:44 by alemarti          #+#    #+#             */
-/*   Updated: 2023/06/20 07:16:40 by alemarti         ###   ########.fr       */
+/*   Updated: 2023/06/20 12:42:42 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,43 @@ void	free_environ(t_environ *environ)
 	free(environ);
 }
 
+int	init_pipes(int pipes[1024][2], int n_pipes)
+{
+	int	i;
+
+	i = -1;
+	while (++i < n_pipes)
+	{
+		if (pipe(pipes[i]))
+		{
+			return (-1);
+		}
+	}
+	return (0);
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
-	int			fd_pipe[2];
-	int			fd_in_out[2];
+	int			fd_pipe[1024][2];
 	t_environ	*environ;
+	int			i;
 
-	if (argc != 5)
+	i = 0;
+	if (argc < 5)
 	{
 		ft_putstr_fd("pipex: wrong number of arguments\n", 2);
 		return (0);
 	}
+	environ = 0;
 	environ = init_environ(argv[1], argv[argc - 1], envp);
-	if (open_files(fd_in_out, environ) < 0)
+	environ->n_cmd = argc - 3;
+	if (open_files(environ) < 0)
 		return (0);
-	pipe(fd_pipe);
-	spawn_children(environ, argv, fd_pipe, fd_in_out);
+	if (init_pipes(fd_pipe, argc - 4))
+	{
+		return (-1);
+	}
+	spawn_children(environ, argv, fd_pipe);
 	free_environ(environ);
 	return (0);
 }
