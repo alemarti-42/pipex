@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:44 by alemarti          #+#    #+#             */
-/*   Updated: 2023/06/20 12:42:42 by alemarti         ###   ########.fr       */
+/*   Updated: 2023/06/20 13:32:15 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,8 @@ int	init_pipes(int pipes[1024][2], int n_pipes)
 
 	i = -1;
 	while (++i < n_pipes)
-	{
 		if (pipe(pipes[i]))
-		{
 			return (-1);
-		}
-	}
 	return (0);
 }
 
@@ -71,9 +67,7 @@ int	main(int argc, char *argv[], char *envp[])
 	if (open_files(environ) < 0)
 		return (0);
 	if (init_pipes(fd_pipe, argc - 4))
-	{
 		return (-1);
-	}
 	spawn_children(environ, argv, fd_pipe);
 	free_environ(environ);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:18 by alemarti          #+#    #+#             */
-/*   Updated: 2023/06/20 12:39:01 by alemarti         ###   ########.fr       */
+/*   Updated: 2023/06/20 13:32:42 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,9 @@ int	close_fds(int fd_pipe[1024][2], t_environ *environ, int index)
 	if (index == environ->n_cmd - 1)
 		close(environ->fd_in_out[1]);
 	if (index != environ->n_cmd - 1)
-	{
 		close(fd_pipe[1][index - 1]);
-	}
 	if (index != 0)
-	{
 		close(fd_pipe[0][index - 2]);
-	}
 	return (0);
 }
 
