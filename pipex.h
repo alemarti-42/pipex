@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:46 by alemarti          #+#    #+#             */
-/*   Updated: 2023/06/20 12:41:48 by alemarti         ###   ########.fr       */
+/*   Updated: 2023/07/10 14:48:31 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_environ
 	char	**paths;
 	char	*infile;
 	char	*outfile;
-	int		*fd_in_out;
+	int		fd_in_out[2];
 	int		n_cmd;
 }	t_environ;
 

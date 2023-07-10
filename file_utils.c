@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:32 by alemarti          #+#    #+#             */
-/*   Updated: 2023/06/20 12:39:30 by alemarti         ###   ########.fr       */
+/*   Updated: 2023/07/10 14:59:42 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ int	open_infile(char *infile)
 	if (access(infile, F_OK) == -1)
 	{
 		put_error("no such file or directory: ", infile);
+		return (-1);
+	}
+	if (access(infile, R_OK) == -1)
+	{
+		put_error("permission denied: ", infile);
 		return (-1);
 	}
 	return (open(infile, O_RDONLY));

@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:25 by alemarti          #+#    #+#             */
-/*   Updated: 2022/08/08 19:18:52 by alemarti         ###   ########.fr       */
+/*   Updated: 2023/07/10 14:44:10 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ char	*which_bin(char **paths, char *cmd)
 	i = 0;
 	if (access(cmd, X_OK) == 0)
 		return (cmd);
+	if (!paths)
+		return (NULL);
 	while (paths[i])
 	{
 		bin = path_join(paths[i], cmd);
