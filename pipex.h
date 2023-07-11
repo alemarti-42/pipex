@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:46 by alemarti          #+#    #+#             */
-/*   Updated: 2023/07/10 14:48:31 by alemarti         ###   ########.fr       */
+/*   Updated: 2023/07/11 14:16:40 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ int			spawn_children(t_environ *environ, char *argv[], \
 	int fd_pipe[1024][2]);
 int			child_routine(int fd_pipe[1024][2], char *cmd, \
 	t_environ *environ, int index);
-void		reader_child(int *fd_pipe, char *cmd, \
-	t_environ *environ, int fd_in);
-void		writer_child(int *fd_pipe, char *cmd, \
-	t_environ *environ, int fd_out);
+int			close_fds(int fd_pipe[1024][2], int n_pipes);
 
 //pipex.c
 void		put_error(char *text, char *element);
