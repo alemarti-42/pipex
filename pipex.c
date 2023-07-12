@@ -6,13 +6,32 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:44 by alemarti          #+#    #+#             */
-/*   Updated: 2023/07/10 12:53:43 by alemarti         ###   ########.fr       */
+/*   Updated: 2023/07/12 12:05:31 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	**get_path(char *envp[])
+void	put_error(char *text, char *element)
+{
+	ft_putstr_fd("pipex: ", 2);
+	ft_putstr_fd(text, 2);
+	ft_putstr_fd(element, 2);
+	ft_putstr_fd("\n", 2);
+}
+
+static int	init_pipes(int pipes[1024][2], int n_pipes)
+{
+	int	i;
+
+	i = -1;
+	while (++i < n_pipes)
+		if (pipe(pipes[i]))
+			return (-1);
+	return (0);
+}
+
+static char	**get_path(char *envp[])
 {
 	while (*envp)
 	{
@@ -23,30 +42,20 @@ char	**get_path(char *envp[])
 	return (NULL);
 }
 
-void	put_error(char *text, char *element)
+static t_environ	*init_environ(char *infile, char *outfile, char *envp[])
 {
-	ft_putstr_fd("pipex: ", 2);
-	ft_putstr_fd(text, 2);
-	ft_putstr_fd(element, 2);
-	ft_putstr_fd("\n", 2);
-}
+	t_environ	*res;
 
-void	free_environ(t_environ *environ)
-{
-	if (environ->paths)
-		free_split(environ->paths);
-	free(environ);
-}
-
-int	init_pipes(int pipes[1024][2], int n_pipes)
-{
-	int	i;
-
-	i = -1;
-	while (++i < n_pipes)
-		if (pipe(pipes[i]))
-			return (-1);
-	return (0);
+	res = (t_environ *)malloc(sizeof(t_environ));
+	if (!res)
+		return (NULL);
+	res->envp = envp;
+	res->paths = get_path(envp);
+	res->infile = infile;
+	res->outfile = outfile;
+	res->fd_in_out[0] = -1;
+	res->fd_in_out[1] = -1;
+	return (res);
 }
 
 int	main(int argc, char *argv[], char *envp[])

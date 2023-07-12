@@ -6,32 +6,13 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:25 by alemarti          #+#    #+#             */
-/*   Updated: 2023/07/10 14:44:10 by alemarti         ###   ########.fr       */
+/*   Updated: 2023/07/12 11:56:22 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"pipex.h"
 
-int	exec_cmd(char **cmd_args, char **paths, char *envp[])
-{
-	char	*bin;
-
-	bin = which_bin(paths, cmd_args[0]);
-	if (!bin)
-	{
-		put_error("command not found: ", cmd_args[0]);
-		return (-1);
-	}
-	if (execve(bin, cmd_args, envp) < 0)
-	{
-		put_error("command execution error: ", cmd_args[0]);
-		free(bin);
-		return (-1);
-	}
-	return (0);
-}
-
-char	*path_join(char *paths, char *cmd)
+static char	*path_join(char *paths, char *cmd)
 {
 	char	*res;
 	int		i;
@@ -53,7 +34,7 @@ char	*path_join(char *paths, char *cmd)
 	return (res);
 }
 
-char	*which_bin(char **paths, char *cmd)
+static char	*which_bin(char **paths, char *cmd)
 {
 	char	*bin;
 	int		i;
@@ -72,4 +53,23 @@ char	*which_bin(char **paths, char *cmd)
 		i++;
 	}
 	return (NULL);
+}
+
+int	exec_cmd(char **cmd_args, char **paths, char *envp[])
+{
+	char	*bin;
+
+	bin = which_bin(paths, cmd_args[0]);
+	if (!bin)
+	{
+		put_error("command not found: ", cmd_args[0]);
+		exit (127);
+	}
+	if (execve(bin, cmd_args, envp) < 0)
+	{
+		put_error("command execution error: ", cmd_args[0]);
+		free(bin);
+		exit (1);
+	}
+	return (0);
 }

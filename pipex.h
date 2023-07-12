@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:46 by alemarti          #+#    #+#             */
-/*   Updated: 2023/07/11 14:16:40 by alemarti         ###   ########.fr       */
+/*   Updated: 2023/07/12 12:05:06 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,21 @@ typedef struct s_environ
 
 //file_utils.c
 int			open_files(t_environ *environ);
-int			open_infile(char *infile);
-int			open_outfile(char *outfile);
+
+//Exec_utils.c
+int			exec_cmd(char **cmd_args, char **paths, char *envp[]);
+
+//ft_split.c
+char		**ft_split(const char *s, char c);
+void		free_split(char **str);
+
+//children_utils.c
+int			spawn_children(t_environ *environ, char *argv[], \
+	int fd_pipe[1024][2]);
+void		free_environ(t_environ *environ);
+
+//pipex.c
+void		put_error(char *text, char *element);
 
 //libft_utils.c
 size_t		ft_strlen(const char *s);
@@ -45,25 +58,4 @@ void		ft_putstr_fd(char *s, int fd);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 char		*ft_substr(const char *s, unsigned int start, size_t len);
 
-//ft_split.c
-char		**ft_split(const char *s, char c);
-void		free_split(char **str);
-
-//Exec_utils.c
-int			exec_cmd(char **cmd_args, char **paths, char *envp[]);
-char		*path_join(char *path, char *cmd);
-char		*which_bin(char **paths, char *cmd);
-
-//children_utils.c
-t_environ	*init_environ(char *infile, char *outfile, char *envp[]);
-int			spawn_children(t_environ *environ, char *argv[], \
-	int fd_pipe[1024][2]);
-int			child_routine(int fd_pipe[1024][2], char *cmd, \
-	t_environ *environ, int index);
-int			close_fds(int fd_pipe[1024][2], int n_pipes);
-
-//pipex.c
-void		put_error(char *text, char *element);
-void		free_environ(t_environ *environ);
-char		**get_path(char *envp[]);
 #endif
