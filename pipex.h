@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:46 by alemarti          #+#    #+#             */
-/*   Updated: 2023/07/12 12:05:06 by alemarti         ###   ########.fr       */
+/*   Updated: 2023/07/12 14:17:56 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ typedef struct s_environ
 
 //file_utils.c
 int			open_files(t_environ *environ);
+int			open_infile(char *infile);
+int			open_outfile(char *outfile);
 
 //Exec_utils.c
 int			exec_cmd(char **cmd_args, char **paths, char *envp[]);

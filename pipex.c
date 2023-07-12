@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:44 by alemarti          #+#    #+#             */
-/*   Updated: 2023/07/12 12:05:31 by alemarti         ###   ########.fr       */
+/*   Updated: 2023/07/12 14:27:42 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,10 @@ int	main(int argc, char *argv[], char *envp[])
 	environ = 0;
 	environ = init_environ(argv[1], argv[argc - 1], envp);
 	environ->n_cmd = argc - 3;
-	if (open_files(environ) < 0)
-		return (-1);
+	open_files(environ);
 	if (init_pipes(fd_pipe, argc - 4))
 		return (-1);
 	spawn_children(environ, argv, fd_pipe);
-	close(environ->fd_in_out[0]);
-	close(environ->fd_in_out[1]);
 	free_environ(environ);
 	return (0);
 }

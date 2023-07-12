@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:18 by alemarti          #+#    #+#             */
-/*   Updated: 2023/07/12 12:05:21 by alemarti         ###   ########.fr       */
+/*   Updated: 2023/07/12 14:35:02 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@ void	free_environ(t_environ *environ)
 	free(environ);
 }
 
-static int	close_fds(int fd_pipe[1024][2], int n_pipes)
+static int	close_fds(int fd_pipe[1024][2], t_environ *environ, int n_pipes)
 {
 	int	i;
 
 	i = 0;
+	close(environ->fd_in_out[0]);
+	close(environ->fd_in_out[1]);
 	while (i < n_pipes)
 	{
 		close(fd_pipe[i][0]);
@@ -36,12 +38,9 @@ static int	close_fds(int fd_pipe[1024][2], int n_pipes)
 static int	dup_fds(int fd_pipe[1024][2], t_environ *environ, int index)
 {	
 	if (index == 0)
-	{
 		dup2(environ->fd_in_out[0], STDIN_FILENO);
-	}
 	else
 	{
-		close(fd_pipe[index - 1][1]);
 		dup2(fd_pipe[index - 1][0], STDIN_FILENO);
 	}
 	if (index == environ->n_cmd - 1)
@@ -50,13 +49,14 @@ static int	dup_fds(int fd_pipe[1024][2], t_environ *environ, int index)
 	}
 	else
 	{
-		close(fd_pipe[index][0]);
 		dup2(fd_pipe[index][1], STDOUT_FILENO);
 	}
+	close (environ->fd_in_out[0]);
+	close (environ->fd_in_out[1]);
 	return (0);
 }
 
-static int	child_routine(int fd_pipe[1024][2], char *cmd, \
+int	child_routine( int fd_pipe[1024][2], char *cmd, \
 		t_environ *environ, int index)
 {
 	int		i;
@@ -64,20 +64,20 @@ static int	child_routine(int fd_pipe[1024][2], char *cmd, \
 
 	i = 0;
 	dup_fds(fd_pipe, environ, index);
-	close_fds(fd_pipe, environ->n_cmd - 1);
+	close_fds(fd_pipe, environ, environ->n_cmd - 1);
 	cmd_args = ft_split(cmd, ' ');
 	if (*cmd_args == 0)
 	{
 		put_error("command not found:", " ");
-		exit (127);
+		return (127);
 	}
 	if (exec_cmd(cmd_args, environ->paths, environ->envp) == -1)
 	{
 		free_split(cmd_args);
 		free_environ(environ);
-		exit (2);
+		return (2);
 	}
-	exit (0);
+	return (0);
 }
 
 int	spawn_children(t_environ *environ, char *argv[], \
@@ -88,6 +88,8 @@ int	spawn_children(t_environ *environ, char *argv[], \
 	pid_t	child_pid;
 
 	i = 0;
+	if (environ->fd_in_out[0] < 0)
+		i++;
 	while (i < environ->n_cmd)
 	{
 		pid = fork();
@@ -98,9 +100,8 @@ int	spawn_children(t_environ *environ, char *argv[], \
 				exit(EXIT_FAILURE);
 		i++;
 	}
-	i = -1;
-	close_fds(fd_pipe, environ->n_cmd - 1);
-	while (++i < environ->n_cmd)
+	close_fds(fd_pipe, environ, environ->n_cmd - 1);
+	while (--i >= 0)
 	{
 		child_pid = waitpid(-1, NULL, 0);
 		if (child_pid == -1)
