@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:44 by alemarti          #+#    #+#             */
-/*   Updated: 2023/07/12 14:27:42 by alemarti         ###   ########.fr       */
+/*   Updated: 2023/07/13 15:05:39 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,20 +63,20 @@ int	main(int argc, char *argv[], char *envp[])
 	int			fd_pipe[1024][2];
 	t_environ	*environ;
 	int			i;
+	int			status;
 
 	i = 0;
 	if (argc < 5)
 	{
 		ft_putstr_fd("pipex: wrong number of arguments\n", 2);
-		return (0);
+		return (1);
 	}
 	environ = 0;
 	environ = init_environ(argv[1], argv[argc - 1], envp);
 	environ->n_cmd = argc - 3;
-	open_files(environ);
 	if (init_pipes(fd_pipe, argc - 4))
 		return (-1);
-	spawn_children(environ, argv, fd_pipe);
+	status = spawn_children(environ, argv, fd_pipe);
 	free_environ(environ);
-	return (0);
+	return (status);
 }

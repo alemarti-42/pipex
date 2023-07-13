@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:25 by alemarti          #+#    #+#             */
-/*   Updated: 2023/07/12 11:56:22 by alemarti         ###   ########.fr       */
+/*   Updated: 2023/07/13 15:12:05 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,11 @@ int	exec_cmd(char **cmd_args, char **paths, char *envp[])
 		exit (1);
 	}
 	return (0);
+}
+
+void	free_environ(t_environ *environ)
+{
+	if (environ->paths)
+		free_split(environ->paths);
+	free(environ);
 }
