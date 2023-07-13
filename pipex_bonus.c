@@ -6,7 +6,7 @@
 /*   By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:25:44 by alemarti          #+#    #+#             */
-/*   Updated: 2023/07/13 18:05:53 by alemarti         ###   ########.fr       */
+/*   Updated: 2023/07/13 15:05:39 by alemarti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	main(int argc, char *argv[], char *envp[])
 	int			status;
 
 	i = 0;
-	if (argc != 5)
+	if (argc < 5)
 	{
 		ft_putstr_fd("pipex: wrong number of arguments\n", 2);
 		return (1);
