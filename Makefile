@@ -6,7 +6,7 @@
 #    By: alemarti <alemarti@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/22 15:25:41 by alemarti          #+#    #+#              #
-#    Updated: 2023/07/13 18:07:22 by alemarti         ###   ########.fr        #
+#    Updated: 2023/07/13 18:13:54 by alemarti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,4 +46,4 @@ fclean:		clean
 
 re:			fclean all
 
-PHONY:		all clean fclean re test
+PHONY:		all clean fclean re bonus
